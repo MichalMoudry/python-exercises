@@ -2,9 +2,6 @@
 Black jack execise module.
 """
 
-from calendar import c
-
-
 FACE_CARDS = ["J", "Q", "K"]
 
 def value_of_card(card: str) -> int:
@@ -19,7 +16,7 @@ def value_of_card(card: str) -> int:
     """
     if card in FACE_CARDS:
         return 10
-    elif card == "A":
+    if card == "A":
         return 1
     return int(card)
 
@@ -37,7 +34,7 @@ def higher_card(card_one: str, card_two: str):
     val1, val2 = value_of_card(card_one), value_of_card(card_two)
     if val1 == val2:
         return (card_one, card_two)
-    elif val1 > val2:
+    if val1 > val2:
         return card_one
     return card_two
 
@@ -57,8 +54,7 @@ def value_of_ace(card_one: str, card_two: str) -> int:
     if val1 == 1 or val2 == 1: summ += 11
     if summ > 21:
         return 1
-    else:
-        return 11
+    return 11
 
 
 def is_blackjack(card_one: str, card_two: str) -> bool:
@@ -84,7 +80,7 @@ def can_split_pairs(card_one: str, card_two: str) -> bool:
     :return: bool - can the hand be split into two pairs? (i.e. cards are of the same value).
     """
     higher = higher_card(card_one, card_two)
-    return type(higher) is tuple
+    return isinstance(higher, tuple)
 
 
 def can_double_down(card_one: str, card_two: str) -> bool:
