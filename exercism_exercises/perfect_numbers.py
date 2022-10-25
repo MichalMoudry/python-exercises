@@ -1,0 +1,5 @@
+"""
+Perfect numbers exercise module.
+"""
+
+
