@@ -13,29 +13,23 @@ def translate(text: str) -> str:
     first_letter = lower_text[0]
     first_two_letters = lower_text[0:2]
     for i, char in enumerate(text):
-        if i < text_length - 1 and lower_text[i + 1] in CONSONANTS:
-            consonants.append(char)
-            consonants.append(text[i + 1])
+        consonants.append(char)
+        if i < text_length - 1 and lower_text[i + 1] in CONSONANTS: continue
         else: break
     consonant_cluster = "".join(consonants)
-        
-    if first_letter in VOWELS or (first_two_letters == "xt" or first_two_letters == "yt"): # rule 1
+    cluster_length = len(consonant_cluster)
+    consonant_cluster_with_qu = text.find(consonant_cluster + "u")
+    consonant_cluster_with_y = text.find(consonant_cluster + "y")
+    
+    if first_letter in VOWELS or (first_two_letters == "xr" or first_two_letters == "yt"): # rule 1
         result.append(text)
-    elif first_letter in CONSONANTS: # rule 2
-        result.append(text[len(consonants):])
+    elif text.startswith(consonant_cluster) and consonant_cluster_with_qu == -1 and consonant_cluster_with_y == -1: # rule 2
+        result.append(text[cluster_length:])
         result.append(consonant_cluster)
-    """
-    if first_letter in VOWELS or first_two_letters in VOWELS:
-        result.append(text)
-    elif first_letter in CONSONANTS and second_and_third_letter != "qu":
-        result.append(text[1:])
-        result.append(text[0])
-    elif first_letter in CONSONANTS and second_and_third_letter == "qu":
-        result.append(text[3:])
-        result.append(text[0])
-        result.append(second_and_third_letter)
-    """
+    elif text.startswith(consonant_cluster) and consonant_cluster_with_qu != -1: # rule 3
+        result.append(text[cluster_length + 1:])
+        result.append(text[:cluster_length + 1])
     result.append("ay")
     return "".join(result)
 
-print(translate("chair"))
+print(translate("rhythm"))
