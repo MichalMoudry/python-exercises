@@ -2,29 +2,20 @@
 Pig latin exercise module.
 """
 
-VOWELS = ("a", "e", "i", "o", "u")
-CONSONANTS = ("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z")
+def translate_word(word):
+    while not word[0] in 'aeiou':
+        if word[0] in 'xy' and not word[1] in 'aeiou':
+            break
+        word = word[1:] + word[0]
+        if word[-1] == 'q' and word[0] == 'u':
+            word = word[1:] + 'u'
+    return word + 'ay'
 
-def translate(text: str) -> str:
-    lower_text = text.lower()
-    result: list[str] = []
-    consonants: list[str] = []
-    text_length = len(text)
-    # TODO: Find consonant cluster
+def translate(sentence):
+    return ' '.join([translate_word(word) for word in sentence.split()])
 
-    """if first_letter in VOWELS or (first_two_letters == "xr" or first_two_letters == "yt"): # rule 1
-        result.append(text)
-    elif text.startswith(consonant_cluster) and consonant_cluster_with_qu == -1 and consonant_cluster_with_y == -1: # rule 2
-        result.append(text[cluster_length:])
-        result.append(consonant_cluster)
-    elif text.startswith(consonant_cluster) and consonant_cluster_with_qu != -1: # rule 3
-        result.append(text[cluster_length + 1:])
-        result.append(text[:cluster_length + 1])
-    elif consonant_cluster_with_y != -1: # rule 4
-        result.append(text[cluster_length:])
-        result.append(text[:cluster_length])
-        result.append("-")"""
-    result.append("ay")
-    return "".join(result)
-
-print(translate("rhythm"))
+print(translate("xray"), "=> Expected: xrayay")
+print(translate("chair"), "=> Expected: airchay")
+print(translate("square"), "=> Expected: aresquay")
+print(translate("rhythm"), "=> Expected: ythmrhay")
+print(translate("my"), "=> Expected: ymay")
