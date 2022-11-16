@@ -9,7 +9,7 @@ EQUAL = "equal"
 UNEQUAL = "unequal"
 
 def is_smaller_list_in_larger_list(smaller_list: list, larger_list: list, small_list_length: int) -> bool:
-    for i, item in enumerate(larger_list):
+    for i, _ in enumerate(larger_list):
         if larger_list[i:small_list_length + i] == smaller_list:
             return True
     return False
