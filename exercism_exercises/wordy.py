@@ -8,6 +8,10 @@ def answer(question: str):
         raise ValueError("syntax error")
     input = input.removeprefix("What is ").removesuffix("?")
     print(f"'{input}'")
-    pass
+    input_length = len(input)
+    if input_length == 1: return int(input)
+    items = enumerate(input.split(" "))
+    print([item for item in items])
+    return 0
 
-answer("What is 5 plus -5?")
+print(answer("What is 5 plus 5 plus 7?"))
