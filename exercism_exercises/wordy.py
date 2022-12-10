@@ -3,15 +3,29 @@ Wordy exercise module.
 """
 
 def answer(question: str):
-    input = question
-    if not input.startswith("What is ") or not input.endswith("?"):
+    inpt = question
+    if not inpt.startswith("What is ") or not inpt.endswith("?"):
         raise ValueError("syntax error")
-    input = input.removeprefix("What is ").removesuffix("?")
-    print(f"'{input}'")
-    input_length = len(input)
-    if input_length == 1: return int(input)
-    items = enumerate(input.split(" "))
-    print([item for item in items])
-    return 0
+    result = 0
+    inpt = inpt.removeprefix("What is ").removesuffix("?").replace(" by", "by")
+    items = inpt.split(" ")
+    lenght = len(items)
+    if lenght == 1: return int(inpt)
+    elif lenght == 2: raise ValueError("unknown operation")
+    try:
+        for tup in enumerate(items):
+            if tup[0] == 0: result = int(tup[1])
+            elif tup[0] % 2 != 0:
+                if tup[1] == "multipliedby":
+                    result = result * int(items[tup[0] + 1])
+                elif tup[1] == "plus":
+                    result = result + int(items[tup[0] + 1])
+                elif tup[1] == "minus":
+                    result = result - int(items[tup[0] + 1])
+                else:
+                    result = result // int(items[tup[0] + 1])
+    except:
+        raise ValueError("syntax error")
+    return result
 
-print(answer("What is 5 plus 5 plus 7?"))
+print(answer("What is 1 plus plus 2?"))
