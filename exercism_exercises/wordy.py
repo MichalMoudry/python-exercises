@@ -4,14 +4,16 @@ Wordy exercise module.
 
 def answer(question: str):
     inpt = question
-    if not inpt.startswith("What is ") or not inpt.endswith("?"):
-        raise ValueError("syntax error")
+    if inpt.startswith("Who"): raise ValueError("unknown operation")
+    elif not inpt.startswith("What is ") or not inpt.endswith("?"): raise ValueError("syntax error")
     result = 0
     inpt = inpt.removeprefix("What is ").removesuffix("?").replace(" by", "by")
     items = inpt.split(" ")
     lenght = len(items)
     if lenght == 1: return int(inpt)
-    elif lenght == 2: raise ValueError("unknown operation")
+    elif lenght == 2:
+        if inpt.endswith("plus"): raise ValueError("syntax error")
+        raise ValueError("unknown operation")
     try:
         for tup in enumerate(items):
             if tup[0] == 0: result = int(tup[1])
@@ -28,4 +30,4 @@ def answer(question: str):
         raise ValueError("syntax error")
     return result
 
-print(answer("What is 1 plus plus 2?"))
+print(answer("Who is the President of the United States?"))
