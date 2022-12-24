@@ -4,10 +4,13 @@ Transpose exercise module.
 
 def transpose(lines: list[str]):
     result: list[str] = []
-    for line in lines:
-        print([item for item in enumerate(line)])
-        for item in line:
-            result.append(item)
+    column_length = len(lines)
+    number_of_rows = 0
+    row_length = 0
+    for row in lines:
+        row_length = len(row)
+        if row_length > number_of_rows: number_of_rows = row_length
+    print("column length:", column_length, "row length:", row_length)
     return result
 
 lines = ["ABC", "123"]
