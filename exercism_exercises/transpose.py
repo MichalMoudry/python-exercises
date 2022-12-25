@@ -11,6 +11,8 @@ def transpose(lines: list[str]):
         row_length = len(row)
         if row_length > number_of_rows: number_of_rows = row_length
     print("column length:", column_length, "row length:", row_length)
+    for row_index in range(number_of_rows):
+        print(f"{row_index}" * column_length)
     return result
 
 lines = ["ABC", "123"]
