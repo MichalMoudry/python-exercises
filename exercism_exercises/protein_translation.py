@@ -9,8 +9,11 @@ PROTEINS = {
     "Serine": ("UCU", "UCC", "UCA", "UCG"),
     "Tyrosine": ("UAU", "UAC"),
     "Cysteine": ("UGU", "UGC"),
-    "Tryptophan": ("UGG",)
+    "Tryptophan": ("UGG",),
+    "STOP": ("UAA", "UAG", "UGA")
 }
+
+PROTEIN_KEYS = list(PROTEINS.keys())
 
 def chunk_iterable(iterable, chunk_size: int):
     """
@@ -24,12 +27,14 @@ def chunk_iterable(iterable, chunk_size: int):
 
 def proteins(strand: str):
     inpt = chunk_iterable(strand, 3)
-    print(inpt)
-    for protein in PROTEINS:
-        print("---", protein, PROTEINS[protein])
-        evl = [prot in inpt for prot in PROTEINS[protein]]
-        print(evl, all(evl))
-    pass
+    protein_index = 0
+    result: list[str] = []
+    for protein in inpt:
+        protein_index = [item[0] for item in enumerate(PROTEINS.values()) if protein in item[1]][0]
+        if PROTEIN_KEYS[protein_index] == "STOP":
+            break
+        result.append(PROTEIN_KEYS[protein_index])
+    return result
 
 if __name__ == "__main__":
     print(proteins("AUGUUUUCUUAAAUG"))
