@@ -6,21 +6,28 @@ PAIRS = {
     "(": ")",
     ")": "(",
     "{": "}",
-    "[": "]"
+    "}": "{",
+    "[": "]",
+    "]": "["
 }
 
 def is_paired(input_string: str) -> bool:
     unique_chars = list(set(input_string))
-    result = False
+    eval_result = False
     for char in unique_chars:
-        if char == "[":
-            print(char, PAIRS[char], PAIRS[char] in unique_chars)
-        elif char == "{":
-            print(char, PAIRS[char], PAIRS[char] in unique_chars)
-        elif char == "(" or char == ")":
-            print(char, PAIRS[char], PAIRS[char] in unique_chars)
-    return result
+        eval_result = PAIRS[char] not in unique_chars
+        if char == "[" and eval_result:
+            return False
+        elif char == "{" and eval_result:
+            return False
+        elif char == "(" and eval_result:
+            return False
+        elif char == "]" and eval_result:
+            return False
+        elif char == ")" and eval_result:
+            return False
+    return True
 
 if __name__ == "__main__":
-    print(is_paired("([[]]{}"), "Expected: True")
+    print(is_paired("[[]]{}"), "Expected: True")
     print(is_paired("{[)][]}"), "Expected: False")
